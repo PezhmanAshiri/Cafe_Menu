@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Friends Cafe</title>
+  <meta name="theme-color" content="#2f2f2f" />
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- 🧭 هدر -->
+  <header>
+    <div class="header-top">
+      <div class="brand">Cafe Friends</div>
+      <div class="table-info"></div>
+    </div>
+
+    <div class="header-bottom">
+      <div class="search-container">
+        <input type="text" id="search" placeholder="جستجوی آیتم‌ها..." autofocus>
+        <select id="categoryFilter">
+          <option value="all">همه دسته‌ها</option>
+          <option value="Coffee">قهوه</option>
+          <option value="Hot Drinks">نوشیدنی گرم</option>
+          <option value="Tea">چای و دمنوش</option>
+          <option value="Dessert">دسر</option>
+          <option value="Shakes">شیک</option>
+          <option value="Ice Espresso">آیس اسپرسو</option>
+        </select>
+        <div id="suggestions"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 💬 معرفی -->
+  <div class="container hero">
+    <div class="hero-card">
+      <h2>سفارش آنلاین روی میز شما</h2>
+      <p>با اسکن QR روی میز، منو را ببینید، آیتم‌ها را به فاکتور اضافه کنید و با یک کلیک سفارش را ثبت کنید.</p>
+    </div>
+    <div class="notice">
+      برای تکمیل سفارش آنلاین در واتس‌اپ، پس از شخصی‌سازی شماره تماس، روی «ثبت سفارش» بزنید.
+    </div>
+  </div>
+
+  <!-- 🧾 دکمه باز کردن سبد -->
+  <div class="container">
+    <button id="showCartBtn" class="btn btn-primary open-cart-btn">
+      🧾 مشاهده فاکتور سفارشات
+      <span id="cartCount" class="cart-count">0</span>
+    </button>
+  </div>
+
+  <!-- 🧩 منوی کافه -->
+  <div class="container grid">
+    <main class="col-8">
+      <div class="section-title">منو کافه</div>
+      <div id="menu" class="menu"></div>
+    </main>
+  </div>
+
+
+  <!-- 🧾 پنل فاکتور -->
+  <div class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+      <h3>فاکتور سفارشات</h3>
+      <button id="closeCart" class="close-cart">×</button>
+    </div>
+
+    <div id="cartItems" class="cart-empty">آیتمی انتخاب نکرده‌اید</div>
+    <div class="cart-total">
+      <span>جمع کل</span><span id="cartTotal">0</span>
+    </div>
+    <!-- 🔹 شماره میز -->
+    <div class="table-input">
+      <label for="tableNo">شماره میز:</label>
+      <input type="number" id="tableNo" placeholder="مثلاً ۵" min="1" />
+    </div>
+
+<!-- 📦 نحوه دریافت سفارش -->
+<div class="pickup-method">
+  <label>نحوه دریافت:</label>
+  <div class="pickup-options">
+    <label><input type="radio" name="pickupType" value="dinein">سفارش در کافه میل می‌شود</label>
+    <label><input type="radio" name="pickupType" value="takeaway"> سفارش بیرون‌بر شود</label>
+  </div>
+</div>
+
+
+
+    <button class="btn btn-primary" id="checkoutBtn">ثبت سفارش (واتس‌اپ)</button>
+    <button class="btn btn-ghost" id="confirmLocalBtn">تأیید در محل</button>
+    <button class="btn btn-danger" id="clearBtn">حذف سفارشات</button>
+  </div>
+
+  <!-- 📞 راه‌های ارتباط -->
+  <div class="contact-box">
+    <div class="contact-title">راه‌های ارتباط با ما</div>
+    <div class="contact-socials-gradient">
+      <a href="tel:+989393844761" class="contact-btn">
+        <img src="https://icongr.am/feather/phone.svg?size=104&color=ffffff" alt="تماس" class="icon">
+        تماس با ما
+      </a>
+      <a href="https://instagram.com/Friends_cafey" target="_blank" class="contact-btn">
+        <img src="https://icongr.am/jam/instagram.svg?size=104&color=ffffff" alt="اینستاگرام" class="icon">
+        اینستاگرام
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    © <span id="year"></span> کافه شما — طراحی سبک و سریع برای سفارش با QR
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
