@@ -833,7 +833,7 @@
 
   .cart-panel {
     max-width: 60%;
-    max-height: 85vh; /* کمی کوتاه‌تر برای موبایل */
+    max-height: 80vh; /* کمی کوتاه‌تر برای موبایل */
   }
   #cartItems {
     max-height: calc(85vh - 150px);
