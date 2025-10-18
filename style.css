@@ -1,4 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap');
+/* 📦 فونت فارسی Vazirmatn - نسخه لوکال */
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('./fonts/Vazirmatn-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('./fonts/Vazirmatn-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
 
 :root {
     --bg: #0f1115;
@@ -17,7 +30,11 @@
     }
   html, body { height: 100%; }
   body {
-    margin: 0;   font-family: 'Vazirmatn', sans-serif;
+    margin: 0;   
+    font-family: 'Vazirmatn', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    direction: rtl;
     background: var(--bg);
     color: var(--text);direction: rtl;
   }
@@ -815,7 +832,7 @@
   }
 
   .cart-panel {
-    max-width: 75%;
+    max-width: 60%;
     max-height: 85vh; /* کمی کوتاه‌تر برای موبایل */
   }
   #cartItems {
