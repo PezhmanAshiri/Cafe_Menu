@@ -313,12 +313,21 @@ if (showCartBtn && cartPanel && closeCart) {
 
  
   // 📌 ورودی شماره میز
+// 📌 ورودی شماره میز (پشتیبانی از اعداد فارسی و عربی)
 const tableInput = document.getElementById('tableNo');
 if (tableInput) {
   tableInput.addEventListener('input', () => {
-    tableNo = tableInput.value.trim();
+    let val = tableInput.value.trim();
+
+    // 🔹 تبدیل اعداد فارسی (۰–۹) به انگلیسی
+    val = val.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+    // 🔹 تبدیل اعداد عربی (٠–٩) به انگلیسی
+    val = val.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+
+    tableNo = val;
   });
 }
+
 
 // 📦 نحوه دریافت سفارش
 document.querySelectorAll('input[name="pickupType"]').forEach(radio => {

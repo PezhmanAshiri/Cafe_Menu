@@ -535,22 +535,26 @@
 /* 🎯 کنترل ارتفاع و اسکرول پنل فاکتور */
 .cart-panel {
   position: fixed;
-  bottom: -100%;
+  bottom: 0;
   right: 0;
   left: 0;
-  margin: auto;
-  width: 100%;
-  max-width: 450px; /* برای دسکتاپ */
+  margin: 0 auto;
+  width: min(90%, 400px); /* 👈 عرض تطبیقی: حداکثر 400px یا 90٪ صفحه */
   background: #1e1e1e;
   border-radius: 20px 20px 0 0;
   box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.25);
-  transition: transform 0.4s ease, bottom 0.4s ease;
+  transition: transform 0.4s ease;
   transform: translateY(100%);
-  max-height: 75vh; /* 👈 حداکثر ارتفاع برابر 75٪ صفحه */
+  max-height: 75vh;
   display: flex;
   flex-direction: column;
   padding: 20px;
-  z-index: 9999; 
+  z-index: 9999;
+}
+
+/* وقتی باز بشه */
+.cart-panel.open {
+  transform: translateY(0);
 }
 
 /* وقتی فعال می‌شود */
@@ -832,8 +836,8 @@
   }
 
   .cart-panel {
-    max-width: 60%;
-    max-height: 80vh; /* کمی کوتاه‌تر برای موبایل */
+    max-width: 70%;
+    max-height: 75vh; /* کمی کوتاه‌تر برای موبایل */
   }
   #cartItems {
     max-height: calc(85vh - 150px);
@@ -959,6 +963,12 @@
     min-width: 0;
     font-size: 14px;
     padding: 10px 14px;
+  }
+
+  .cart-panel {
+    max-width: 75%;
+    max-height: 75vh;
+    padding: 16px;
   }
 
   /* 📦 بخش تماس */
