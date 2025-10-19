@@ -539,7 +539,7 @@
   right: 0;
   left: 0;
   margin: 0 auto;
-  width: min(90%, 400px); /* 👈 عرض تطبیقی: حداکثر 400px یا 90٪ صفحه */
+  width: min(90%, 450px); /* 👈 عرض تطبیقی: حداکثر 400px یا 90٪ صفحه */
   background: #1e1e1e;
   border-radius: 20px 20px 0 0;
   box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.25);
