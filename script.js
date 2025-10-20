@@ -89,6 +89,51 @@ const fmt = (n) => n.toLocaleString('fa-IR') + ' تومان';
 let pickupType = ''; // کاربر هنوز چیزی انتخاب نکرده
 
 
+// 🔢 تابع کمکی: تبدیل هر نوع عدد فارسی یا عربی به انگلیسی
+function toEnglishDigits(str) {
+  if (!str) return '';
+  return str
+    .replace(/[۰-۹]/g, d => '0123456789'['۰۱۲۳۴۵۶۷۸۹'.indexOf(d)]) // فارسی
+    .replace(/[٠-٩]/g, d => '0123456789'['٠١٢٣٤٥٦٧٨٩'.indexOf(d)]) // عربی
+    .replace(/[^0-9]/g, ''); // حذف کاراکترهای غیر عددی
+}
+
+// 🎯 مقدار شماره میز همیشه مستقیم از input گرفته می‌شود
+let tableNo = '';
+const tableInput = document.getElementById('tableNo');
+if (tableInput) {
+  tableInput.addEventListener('input', () => {
+    tableNo = toEnglishDigits(tableInput.value.trim());
+  });
+}
+
+// 🚀 ثبت سفارش واتساپ
+qs('#checkoutBtn').addEventListener('click', () => {
+  const tableInput = document.getElementById('tableNo');
+  const val = toEnglishDigits(tableInput?.value.trim() || '');
+  tableNo = val;
+
+  if (!tableNo) {
+    alert('لطفاً ابتدا شماره میز را وارد کنید.');
+    return;
+  }
+
+  if (!pickupType) {
+    alert('لطفاً نحوه دریافت سفارش را انتخاب کنید.');
+    return;
+  }
+
+  const msg = buildOrderMessage();
+  if (!msg) {
+    alert('آیتمی انتخاب نکرده‌اید');
+    return;
+  }
+
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+});
+
+
 window.addEventListener('DOMContentLoaded', () => {
   const header = document.querySelector('header');
   const toggleCart = document.getElementById('showCartBtn');
@@ -445,49 +490,6 @@ function buildOrderMessage() {
   return lines.join('\n');
 }
 
-// 🔢 تابع کمکی: تبدیل هر نوع عدد فارسی یا عربی به انگلیسی
-function toEnglishDigits(str) {
-  if (!str) return '';
-  return str
-    .replace(/[۰-۹]/g, d => '0123456789'['۰۱۲۳۴۵۶۷۸۹'.indexOf(d)]) // فارسی
-    .replace(/[٠-٩]/g, d => '0123456789'['٠١٢٣٤٥٦٧٨٩'.indexOf(d)]) // عربی
-    .replace(/[^0-9]/g, ''); // حذف کاراکترهای غیر عددی
-}
-
-// 🎯 مقدار شماره میز همیشه مستقیم از input گرفته می‌شود
-let tableNo = '';
-const tableInput = document.getElementById('tableNo');
-if (tableInput) {
-  tableInput.addEventListener('input', () => {
-    tableNo = toEnglishDigits(tableInput.value.trim());
-  });
-}
-
-// 🚀 ثبت سفارش واتساپ
-qs('#checkoutBtn').addEventListener('click', () => {
-  const tableInput = document.getElementById('tableNo');
-  const val = toEnglishDigits(tableInput?.value.trim() || '');
-  tableNo = val;
-
-  if (!tableNo) {
-    alert('لطفاً ابتدا شماره میز را وارد کنید.');
-    return;
-  }
-
-  if (!pickupType) {
-    alert('لطفاً نحوه دریافت سفارش را انتخاب کنید.');
-    return;
-  }
-
-  const msg = buildOrderMessage();
-  if (!msg) {
-    alert('آیتمی انتخاب نکرده‌اید');
-    return;
-  }
-
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-  window.open(url, '_blank');
-});
 
 
 
