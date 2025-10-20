@@ -475,15 +475,23 @@ function toEnglishDigits(str) {
 
 
 qs('#checkoutBtn').addEventListener('click', () => {
-  // 🔹 تبدیل عدد فارسی به انگلیسی قبل از بررسی
-  tableNo = tableNo
+  const tableInput = document.getElementById('tableNo');
+  let val = tableInput ? tableInput.value.trim() : '';
+  
+  // 🔹 تبدیل عدد فارسی یا عربی به انگلیسی
+  val = val
     .replace(/[۰-۹]/g, d => '0123456789'['۰۱۲۳۴۵۶۷۸۹'.indexOf(d)])
     .replace(/[٠-٩]/g, d => '0123456789'['٠١٢٣٤٥٦٧٨٩'.indexOf(d)]);
 
+  // مقدار نهایی رو در tableNo بریزیم
+  tableNo = val;
+
   if (!tableNo) { alert('لطفاً ابتدا شماره میز را وارد کنید.'); return; }
   if (!pickupType) { alert('لطفاً نحوه دریافت سفارش را انتخاب کنید.'); return; }
+
   const msg = buildOrderMessage();
   if (!msg) { alert('آیتمی انتخاب نکرده اید'); return; }
+
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
   window.open(url, '_blank');
 });
