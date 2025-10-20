@@ -465,7 +465,21 @@ function buildOrderMessage() {
   return lines.join('\n');
 }
 
+// 🔢 تابع کمکی برای تبدیل اعداد فارسی و عربی به انگلیسی
+function toEnglishDigits(str) {
+  if (!str) return '';
+  return str
+    .replace(/[۰-۹]/g, d => '0123456789'['۰۱۲۳۴۵۶۷۸۹'.indexOf(d)]) // فارسی
+    .replace(/[٠-٩]/g, d => '0123456789'['٠١٢٣٤٥٦٧٨٩'.indexOf(d)]); // عربی
+}
+
+
 qs('#checkoutBtn').addEventListener('click', () => {
+  // 🔹 تبدیل عدد فارسی به انگلیسی قبل از بررسی
+  tableNo = tableNo
+    .replace(/[۰-۹]/g, d => '0123456789'['۰۱۲۳۴۵۶۷۸۹'.indexOf(d)])
+    .replace(/[٠-٩]/g, d => '0123456789'['٠١٢٣٤٥٦٧٨٩'.indexOf(d)]);
+
   if (!tableNo) { alert('لطفاً ابتدا شماره میز را وارد کنید.'); return; }
   if (!pickupType) { alert('لطفاً نحوه دریافت سفارش را انتخاب کنید.'); return; }
   const msg = buildOrderMessage();
@@ -474,7 +488,11 @@ qs('#checkoutBtn').addEventListener('click', () => {
   window.open(url, '_blank');
 });
 
+
 qs('#confirmLocalBtn').addEventListener('click', () => {
+  const tableInput = document.getElementById('tableNo');
+  const tableValue = toEnglishDigits(tableInput.value.trim());
+  tableNo = tableValue;
   if (!tableNo) { alert('لطفاً ابتدا شماره میز را وارد کنید.'); return; }
   if (!pickupType) { alert('لطفاً نحوه دریافت سفارش را انتخاب کنید.'); return; }
   const msg = buildOrderMessage();
