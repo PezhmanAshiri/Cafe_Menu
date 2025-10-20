@@ -86,7 +86,6 @@ const qsa = (sel) => document.querySelectorAll(sel);
 const fmt = (n) => n.toLocaleString('fa-IR') + ' تومان';
 
 // ——— متغیر شماره میز
-let tableNo = '';
 let pickupType = ''; // کاربر هنوز چیزی انتخاب نکرده
 
 
@@ -312,25 +311,6 @@ if (showCartBtn && cartPanel && closeCart) {
 }
 
  
-// 📌 ورودی شماره میز (پشتیبانی از اعداد فارسی و عربی و بررسی معتبر بودن)
-const tableInput = document.getElementById('tableNo');
-if (tableInput) {
-  tableInput.addEventListener('input', () => {
-    let val = tableInput.value.trim();
-
-    // 🔹 نگه داشتن مقدار ورودی برای نمایش (حتی فارسی)
-    tableNo = val;
-
-    // 🔹 ساخت رشته‌ای که نسخه انگلیسی از عدد فارسی/عربی است
-    let englishDigits = val
-      .replace(/[۰-۹]/g, d => '0123456789'['۰۱۲۳۴۵۶۷۸۹'.indexOf(d)])  // فارسی به انگلیسی
-      .replace(/[٠-٩]/g, d => '0123456789'['٠١٢٣٤٥٦٧٨٩'.indexOf(d)])  // عربی به انگلیسی
-      .replace(/[^0-9]/g, '');  // حذف بقیه کاراکترها
-
-    // 🔹 اگر رشته معتبر بود، ذخیره‌اش کنیم
-    tableNo = englishDigits;
-  });
-}
 
 
 
@@ -465,36 +445,50 @@ function buildOrderMessage() {
   return lines.join('\n');
 }
 
-// 🔢 تابع کمکی برای تبدیل اعداد فارسی و عربی به انگلیسی
+// 🔢 تابع کمکی: تبدیل هر نوع عدد فارسی یا عربی به انگلیسی
 function toEnglishDigits(str) {
   if (!str) return '';
   return str
     .replace(/[۰-۹]/g, d => '0123456789'['۰۱۲۳۴۵۶۷۸۹'.indexOf(d)]) // فارسی
-    .replace(/[٠-٩]/g, d => '0123456789'['٠١٢٣٤٥٦٧٨٩'.indexOf(d)]); // عربی
+    .replace(/[٠-٩]/g, d => '0123456789'['٠١٢٣٤٥٦٧٨٩'.indexOf(d)]) // عربی
+    .replace(/[^0-9]/g, ''); // حذف کاراکترهای غیر عددی
 }
 
+// 🎯 مقدار شماره میز همیشه مستقیم از input گرفته می‌شود
+let tableNo = '';
+const tableInput = document.getElementById('tableNo');
+if (tableInput) {
+  tableInput.addEventListener('input', () => {
+    tableNo = toEnglishDigits(tableInput.value.trim());
+  });
+}
 
+// 🚀 ثبت سفارش واتساپ
 qs('#checkoutBtn').addEventListener('click', () => {
   const tableInput = document.getElementById('tableNo');
-  let val = tableInput ? tableInput.value.trim() : '';
-  
-  // 🔹 تبدیل عدد فارسی یا عربی به انگلیسی
-  val = val
-    .replace(/[۰-۹]/g, d => '0123456789'['۰۱۲۳۴۵۶۷۸۹'.indexOf(d)])
-    .replace(/[٠-٩]/g, d => '0123456789'['٠١٢٣٤٥٦٧٨٩'.indexOf(d)]);
-
-  // مقدار نهایی رو در tableNo بریزیم
+  const val = toEnglishDigits(tableInput?.value.trim() || '');
   tableNo = val;
 
-  if (!tableNo) { alert('لطفاً ابتدا شماره میز را وارد کنید.'); return; }
-  if (!pickupType) { alert('لطفاً نحوه دریافت سفارش را انتخاب کنید.'); return; }
+  if (!tableNo) {
+    alert('لطفاً ابتدا شماره میز را وارد کنید.');
+    return;
+  }
+
+  if (!pickupType) {
+    alert('لطفاً نحوه دریافت سفارش را انتخاب کنید.');
+    return;
+  }
 
   const msg = buildOrderMessage();
-  if (!msg) { alert('آیتمی انتخاب نکرده اید'); return; }
+  if (!msg) {
+    alert('آیتمی انتخاب نکرده‌اید');
+    return;
+  }
 
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
   window.open(url, '_blank');
 });
+
 
 
 qs('#confirmLocalBtn').addEventListener('click', () => {
