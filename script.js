@@ -492,19 +492,6 @@ qs('#checkoutBtn').addEventListener('click', () => {
 
 
 
-qs('#confirmLocalBtn').addEventListener('click', () => {
-  const tableInput = document.getElementById('tableNo');
-  const tableValue = toEnglishDigits(tableInput.value.trim());
-  tableNo = tableValue;
-  if (!tableNo) { alert('لطفاً ابتدا شماره میز را وارد کنید.'); return; }
-  if (!pickupType) { alert('لطفاً نحوه دریافت سفارش را انتخاب کنید.'); return; }
-  const msg = buildOrderMessage();
-  if (!msg) { alert('آیتمی انتخاب نکرده اید'); return; }
-  const code = Math.random().toString(36).slice(2, 8).toUpperCase();
-  localStorage.setItem('last_order', JSON.stringify({ code, table: tableNo, cart, at: Date.now() }));
-  alert('سفارش شما ثبت شد. کد پیگیری: ' + code + '\nآن را به گارسون نشان دهید.');
-});
-
 // ——— حذف سبد
 qs('#clearBtn').addEventListener('click', () => {
   if (confirm('سفارشات حذف شوند؟')) { cart = {}; saveCart(); updateQtyUI(); updateCartCount();
