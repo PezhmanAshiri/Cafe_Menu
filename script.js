@@ -78,7 +78,7 @@
   ];
 
 // ——— تنظیمات: شماره واتس‌اپ کافه (فقط ارقام، با کد کشور)
-const WHATSAPP_NUMBER = '989393844761';
+const WHATSAPP_NUMBER = '989398874761';
 
 // ——— ابزار کمکی
 const qs = (s, el = document) => el.querySelector(s);
