@@ -445,17 +445,15 @@ function buildOrderMessage() {
   return lines.join('\n');
 }
 
-// ✅ نسخه‌ی اصلاح‌شده: پشتیبانی کامل از اعداد فارسی و عربی
+// ✅ تبدیل همهٔ اعداد فارسی/عربی به انگلیسی و حذف بقیهٔ کاراکترها
 function toEnglishDigits(str) {
   if (!str) return '';
-  return str
-    // اعداد فارسی
-    .replace(/[۰-۹]/g, d => String.fromCharCode(d.charCodeAt(0) - 1728))
-    // اعداد عربی
-    .replace(/[٠-٩]/g, d => String.fromCharCode(d.charCodeAt(0) - 1584))
-    // حذف هرچیز غیرعددی
-    .replace(/[^0-9]/g, '');
+  return String(str)
+    .replace(/[\u06F0-\u06F9]/g, d => String.fromCharCode(d.charCodeAt(0) - 1728)) // فارسی ۰..۹
+    .replace(/[\u0660-\u0669]/g, d => String.fromCharCode(d.charCodeAt(0) - 1584)) // عربی ٠..٩
+    .replace(/[^0-9]/g, ''); // حذف غیرعددی
 }
+
 
 
 // 🎯 مقدار شماره میز همیشه مستقیم از input گرفته می‌شود
@@ -470,9 +468,8 @@ if (tableInput) {
 // 🚀 ثبت سفارش واتساپ
 qs('#checkoutBtn').addEventListener('click', () => {
   const tableInput = document.getElementById('tableNo');
-  const val = toEnglishDigits(tableInput?.value.trim() || '');
+  const val = toEnglishDigits(document.getElementById('tableNo')?.value.trim() || '');
   tableNo = val;
-
   if (!tableNo) {
     alert('لطفاً ابتدا شماره میز را وارد کنید.');
     return;
